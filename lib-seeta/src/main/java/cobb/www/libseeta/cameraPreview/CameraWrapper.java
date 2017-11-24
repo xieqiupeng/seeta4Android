@@ -21,6 +21,7 @@
 package cobb.www.libseeta.cameraPreview;
 
 import android.annotation.SuppressLint;
+import android.content.Context;
 import android.graphics.ImageFormat;
 import android.graphics.Point;
 import android.graphics.SurfaceTexture;
@@ -31,160 +32,163 @@ import android.view.SurfaceHolder;
 import java.io.IOException;
 import java.util.List;
 
-import cobb.www.libseeta.Detection.Detection.FaceDetector;
-import cn.edu.zstu.facedetection.util.MyApplication;
+import cobb.www.libseeta.Detection.CameraUtil;
+import cobb.www.libseeta.Detection.FaceDetector;
 
 @SuppressLint("NewApi")
 public class CameraWrapper {
-    private static final String TAG = "CameraWrapper";
+	private static final String TAG = "CameraWrapper";
 
-    public static int IMAGE_HEIGHT = 480;
-    public static int IMAGE_WIDTH = 640;
-    private static final boolean DEBUG = true;
-    private static CameraWrapper mCameraWrapper;
+	public static int IMAGE_HEIGHT = 480;
+	public static int IMAGE_WIDTH = 640;
+	private static final boolean DEBUG = true;
+	private static CameraWrapper mCameraWrapper;
 
-    Camera.PreviewCallback previewCallback;
-    private Camera mCamera;
-    private Camera.Parameters mCameraParamters;
-    private boolean mIsPreviewing = false;
-    private float mPreviewRate = -1.0f;
-    private CameraPreviewCallback mCameraPreviewCallback;
-    private int openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+	Camera.PreviewCallback previewCallback;
+	private Camera mCamera;
+	private Camera.Parameters mCameraParamters;
+	private boolean mIsPreviewing = false;
+	private float mPreviewRate = -1.0f;
+	private CameraPreviewCallback mCameraPreviewCallback;
+	private int openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
 
-    private CameraWrapper() {
-    }
+	private Context context = null;
 
-    public static CameraWrapper getInstance() {
-        if (mCameraWrapper == null) {
-            synchronized (CameraWrapper.class) {
-                if (mCameraWrapper == null) {
-                    mCameraWrapper = new CameraWrapper();
-                }
-            }
-        }
-        return mCameraWrapper;
-    }
+	private CameraWrapper(Context context) {
+		this.context = context;
+	}
 
-    public void switchCameraId() {
-        if (openCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
-            openCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
-        } else {
-            openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
-        }
-    }
+	public static CameraWrapper getInstance(Context context) {
+		if (mCameraWrapper == null) {
+			synchronized (CameraWrapper.class) {
+				if (mCameraWrapper == null) {
+					mCameraWrapper = new CameraWrapper(context);
+				}
+			}
+		}
+		return mCameraWrapper;
+	}
 
-    public void doOpenCamera(CamOpenOverCallback callback) {
-        if (DEBUG) Log.i(TAG, "Camera open....");
-        int numCameras = Camera.getNumberOfCameras();
-        Camera.CameraInfo info = new Camera.CameraInfo();
-        for (int i = 0; i < numCameras; i++) {
-            Camera.getCameraInfo(i, info);
-            if (info.facing == openCameraId) {
-                mCamera = Camera.open(i);
-                break;
-            }
-        }
-        if (mCamera == null) {
-            if (DEBUG) Log.d(TAG, "No front-facing camera found; opening default");
-            mCamera = Camera.open();    // opens first back-facing camera
-        }
-        if (mCamera == null) {
-            throw new RuntimeException("Unable to open camera");
-        }
-        if (DEBUG) Log.i(TAG, "Camera open over....");
-        callback.cameraHasOpened();
-    }
+	public void switchCameraId() {
+		if (openCameraId == Camera.CameraInfo.CAMERA_FACING_BACK) {
+			openCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
+		} else {
+			openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+		}
+	}
 
-    public void doStartPreview(SurfaceHolder holder, float previewRate) {
-        if (DEBUG) Log.i(TAG, "doStartPreview...");
-        if (mIsPreviewing) {
-            this.mCamera.stopPreview();
-            return;
-        }
+	public void doOpenCamera(CamOpenOverCallback callback) {
+		if (DEBUG) Log.i(TAG, "Camera open....");
+		int numCameras = Camera.getNumberOfCameras();
+		Camera.CameraInfo info = new Camera.CameraInfo();
+		for (int i = 0; i < numCameras; i++) {
+			Camera.getCameraInfo(i, info);
+			if (info.facing == openCameraId) {
+				mCamera = Camera.open(i);
+				break;
+			}
+		}
+		if (mCamera == null) {
+			if (DEBUG) Log.d(TAG, "No front-facing camera found; opening default");
+			mCamera = Camera.open();    // opens first back-facing camera
+		}
+		if (mCamera == null) {
+			throw new RuntimeException("Unable to open camera");
+		}
+		if (DEBUG) Log.i(TAG, "Camera open over....");
+		callback.cameraHasOpened();
+	}
 
-        try {
-            this.mCamera.setPreviewDisplay(holder);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        initCamera();
-    }
+	public void doStartPreview(SurfaceHolder holder, float previewRate) {
+		if (DEBUG) Log.i(TAG, "doStartPreview...");
+		if (mIsPreviewing) {
+			this.mCamera.stopPreview();
+			return;
+		}
 
-    public void doStartPreview(SurfaceTexture surface) {
-        if (DEBUG) Log.i(TAG, "doStartPreview()");
-        if (mIsPreviewing) {
-            this.mCamera.stopPreview();
-            return;
-        }
+		try {
+			this.mCamera.setPreviewDisplay(holder);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		initCamera(context);
+	}
 
-        try {
-            this.mCamera.setPreviewTexture(surface);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        initCamera();
-    }
+	public void doStartPreview(SurfaceTexture surface) {
+		if (DEBUG) Log.i(TAG, "doStartPreview()");
+		if (mIsPreviewing) {
+			this.mCamera.stopPreview();
+			return;
+		}
 
-    public void doStopCamera() {
-        if (DEBUG) Log.i(TAG, "doStopCamera");
-        if (this.mCamera != null) {
-            this.mCamera.setPreviewCallback(null);
-            this.mCamera.stopPreview();
-            this.mIsPreviewing = false;
-            this.mPreviewRate = -1f;
-            this.mCamera.release();
-            this.mCamera = null;
-        }
-    }
+		try {
+			this.mCamera.setPreviewTexture(surface);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		initCamera(context);
+	}
 
-    private void initCamera() {
-        if (this.mCamera != null) {
-            this.mCameraParamters = this.mCamera.getParameters();
-            this.mCameraParamters.setPreviewFormat(ImageFormat.NV21);
-            this.mCameraParamters.setFlashMode("off");
-            this.mCameraParamters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
-            this.mCameraParamters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
-            Point p = MyApplication.getBestCameraResolution(this.mCameraParamters, MyApplication.getScreenMetrics());
-            IMAGE_WIDTH = p.x;
-            IMAGE_HEIGHT = p.y;
-            this.mCameraParamters.setPreviewSize(IMAGE_WIDTH, IMAGE_HEIGHT);
-            mCameraPreviewCallback = new CameraPreviewCallback();
-            byte[] a = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
-            byte[] b = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
-            byte[] c = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
-            mCamera.addCallbackBuffer(a);
-            mCamera.addCallbackBuffer(b);
-            mCamera.addCallbackBuffer(c);
-            mCamera.setPreviewCallbackWithBuffer(mCameraPreviewCallback);
-            List<String> focusModes = this.mCameraParamters.getSupportedFocusModes();
-            if (focusModes.contains("continuous-video")) {
-                this.mCameraParamters
-                        .setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
-            }
-            this.mCamera.setParameters(this.mCameraParamters);
-            this.mCamera.startPreview();
+	public void doStopCamera() {
+		if (DEBUG) Log.i(TAG, "doStopCamera");
+		if (this.mCamera != null) {
+			this.mCamera.setPreviewCallback(null);
+			this.mCamera.stopPreview();
+			this.mIsPreviewing = false;
+			this.mPreviewRate = -1f;
+			this.mCamera.release();
+			this.mCamera = null;
+		}
+	}
 
-            this.mIsPreviewing = true;
-        }
-    }
+	private void initCamera(Context context) {
+		if (this.mCamera != null) {
+			this.mCameraParamters = this.mCamera.getParameters();
+			this.mCameraParamters.setPreviewFormat(ImageFormat.NV21);
+			this.mCameraParamters.setFlashMode("off");
+			this.mCameraParamters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+			this.mCameraParamters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+			Point p = CameraUtil.getBestCameraResolution(this.mCameraParamters, CameraUtil.getScreenMetrics(context));
+			IMAGE_WIDTH = p.x;
+			IMAGE_HEIGHT = p.y;
+			this.mCameraParamters.setPreviewSize(IMAGE_WIDTH, IMAGE_HEIGHT);
+			mCameraPreviewCallback = new CameraPreviewCallback();
+			byte[] a = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+			byte[] b = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+			byte[] c = new byte[IMAGE_WIDTH * IMAGE_HEIGHT * 3 / 2];
+			mCamera.addCallbackBuffer(a);
+			mCamera.addCallbackBuffer(b);
+			mCamera.addCallbackBuffer(c);
+			mCamera.setPreviewCallbackWithBuffer(mCameraPreviewCallback);
+			List<String> focusModes = this.mCameraParamters.getSupportedFocusModes();
+			if (focusModes.contains("continuous-video")) {
+				this.mCameraParamters
+						.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_VIDEO);
+			}
+			this.mCamera.setParameters(this.mCameraParamters);
+			this.mCamera.startPreview();
 
-    public void setPreviewCallback(Camera.PreviewCallback callback) {
-        previewCallback = callback;
-    }
+			this.mIsPreviewing = true;
+		}
+	}
 
-    public interface CamOpenOverCallback {
-        void cameraHasOpened();
-    }
+	public void setPreviewCallback(Camera.PreviewCallback callback) {
+		previewCallback = callback;
+	}
 
-    class CameraPreviewCallback implements Camera.PreviewCallback {
+	public interface CamOpenOverCallback {
+		void cameraHasOpened();
+	}
 
-        private CameraPreviewCallback() {
-        }
+	class CameraPreviewCallback implements Camera.PreviewCallback {
 
-        @Override
-        public void onPreviewFrame(byte[] data, Camera camera) {
-            FaceDetector.getInstance().onFrameData(data);
-            camera.addCallbackBuffer(data);
-        }
-    }
+		private CameraPreviewCallback() {
+		}
+
+		@Override
+		public void onPreviewFrame(byte[] data, Camera camera) {
+			FaceDetector.getInstance().onFrameData(data);
+			camera.addCallbackBuffer(data);
+		}
+	}
 }

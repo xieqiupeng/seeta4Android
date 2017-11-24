@@ -28,105 +28,107 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.TextureView;
 
-import cobb.www.libseeta.Detection.Detection.FaceDetector;
-import cn.edu.zstu.facedetection.MainActivity;
+import cobb.www.libseeta.Detection.FaceDetector;
 
 @SuppressLint("NewApi")
 public class CameraTexturePreview extends TextureView implements TextureView.SurfaceTextureListener {
-    private final String   TAG = "CameraTexturePreview";
-    private boolean        DEBUG = MainActivity.DEBUG;
-    private static SurfaceTexture mSurfaceTexture = null;
-    private static boolean mCamHasOpened = false;
-    private static boolean mSurfaceTextureAvailable = false;
-    public static Matrix   mScaleMatrix = new Matrix();
-    public static int      mSurfaceHeight;
-    public static int      mSurfaceWidth;
+	private final String TAG = "CameraTexturePreview";
+	private boolean DEBUG = true;
+	private static SurfaceTexture mSurfaceTexture = null;
+	private static boolean mCamHasOpened = false;
+	private static boolean mSurfaceTextureAvailable = false;
+	public static Matrix mScaleMatrix = new Matrix();
+	public static int mSurfaceHeight;
+	public static int mSurfaceWidth;
 
-    public CameraTexturePreview(Context context, AttributeSet attrs) {
-        super(context, attrs);
-        this.setSurfaceTextureListener(this);
-    }
+	private static Context context = null;
 
-    @Override
-    public void onSurfaceTextureAvailable(SurfaceTexture surface, int width,
-                                          int height) {
-        if (DEBUG)
-            Log.i(TAG, "onSurfaceTextureAvailable()");
+	public CameraTexturePreview(Context context, AttributeSet attrs) {
+		super(context, attrs);
+		this.setSurfaceTextureListener(this);
+		CameraTexturePreview.context = context.getApplicationContext();
+	}
 
-        mSurfaceTextureAvailable = true;
-        if (mCamHasOpened) {
-            startPreview(surface);
-        }
-        mSurfaceTexture = surface;
-        mSurfaceHeight = height;
-        mSurfaceWidth = width;
-        mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
-    }
+	@Override
+	public void onSurfaceTextureAvailable(SurfaceTexture surface, int width,
+	                                      int height) {
+		if (DEBUG)
+			Log.i(TAG, "onSurfaceTextureAvailable()");
 
-    @Override
-    public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width,
-                                            int height) {
-        if (DEBUG)
-            Log.i(TAG, "onSurfaceTextureSizeChanged()");
+		mSurfaceTextureAvailable = true;
+		if (mCamHasOpened) {
+			startPreview(surface);
+		}
+		mSurfaceTexture = surface;
+		mSurfaceHeight = height;
+		mSurfaceWidth = width;
+		mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
+	}
 
-        mSurfaceHeight = height;
-        mSurfaceWidth = width;
-        mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
-    }
+	@Override
+	public void onSurfaceTextureSizeChanged(SurfaceTexture surface, int width,
+	                                        int height) {
+		if (DEBUG)
+			Log.i(TAG, "onSurfaceTextureSizeChanged()");
 
-    @Override
-    public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
-        if (DEBUG)
-            Log.i(TAG, "onSurfaceTextureDestroyed()");
+		mSurfaceHeight = height;
+		mSurfaceWidth = width;
+		mScaleMatrix.setScale(width / (float) CameraWrapper.IMAGE_WIDTH, height / (float) CameraWrapper.IMAGE_HEIGHT);
+	}
 
-        if (FaceDetector.getInstance().getIsStarted())
-            FaceDetector.getInstance().stopDetector();
+	@Override
+	public boolean onSurfaceTextureDestroyed(SurfaceTexture surface) {
+		if (DEBUG)
+			Log.i(TAG, "onSurfaceTextureDestroyed()");
 
-        mCamHasOpened = false;
-        mSurfaceTextureAvailable = false;
-        mSurfaceTexture = null;
-        closeCamera();
-        return false;
-    }
+		if (FaceDetector.getInstance().getIsStarted())
+			FaceDetector.getInstance().stopDetector();
 
-    @Override
-    public void onSurfaceTextureUpdated(SurfaceTexture surface) {
+		mCamHasOpened = false;
+		mSurfaceTextureAvailable = false;
+		mSurfaceTexture = null;
+		closeCamera();
+		return false;
+	}
+
+	@Override
+	public void onSurfaceTextureUpdated(SurfaceTexture surface) {
 //		Log.i(TAG, "onSurfaceTextureUpdated()");  
-    }
+	}
 
-    private static CameraWrapper.CamOpenOverCallback mCamOpenOverCallback = new CameraWrapper.CamOpenOverCallback() {
-        @Override
-        public void cameraHasOpened() {
-            mCamHasOpened = true;
-            if (mSurfaceTextureAvailable && (mSurfaceTexture != null)) {
-                startPreview(mSurfaceTexture);
-                mScaleMatrix.setScale(mSurfaceWidth / (float) CameraWrapper.IMAGE_WIDTH,
-                        mSurfaceHeight / (float) CameraWrapper.IMAGE_HEIGHT);
-            }
-        }
-    };
+	private static CameraWrapper.CamOpenOverCallback mCamOpenOverCallback = new CameraWrapper.CamOpenOverCallback() {
+		@Override
+		public void cameraHasOpened() {
+			mCamHasOpened = true;
+			if (mSurfaceTextureAvailable && (mSurfaceTexture != null)) {
+				startPreview(mSurfaceTexture);
+				mScaleMatrix.setScale(mSurfaceWidth / (float) CameraWrapper.IMAGE_WIDTH,
+						mSurfaceHeight / (float) CameraWrapper.IMAGE_HEIGHT);
+			}
+		}
+	};
 
-    public static void openCamera() {
-        Thread openThread = new Thread() {
-            @Override
-            public void run() {
-                CameraWrapper.getInstance().doOpenCamera(mCamOpenOverCallback);
-            }
-        };
-        openThread.start();
-    }
+	public static void openCamera() {
+		Thread openThread = new Thread() {
+			@Override
+			public void run() {
+				CameraWrapper.getInstance(context).doOpenCamera(mCamOpenOverCallback);
+			}
+		};
+		openThread.start();
+	}
 
-    private static void startPreview(SurfaceTexture surface) {
-        CameraWrapper.getInstance().doStartPreview(surface);
-    }
+	private static void startPreview(SurfaceTexture surface) {
+		CameraWrapper.getInstance(context).doStartPreview(surface);
+	}
 
-    public static void closeCamera() {
-        CameraWrapper.getInstance().doStopCamera();
-    }
+	public static void closeCamera() {
+		CameraWrapper.getInstance(context).doStopCamera();
+	}
 
-    public void switchCamera() {
-        closeCamera();
-        CameraWrapper.getInstance().switchCameraId();
-        openCamera();
-    }
+	public void switchCamera() {
+		closeCamera();
+		CameraWrapper.getInstance(context).switchCameraId();
+		openCamera();
+	}
 }

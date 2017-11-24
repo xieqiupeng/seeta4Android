@@ -16,7 +16,6 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 
-import cn.edu.zstu.facedetection.MainActivity;
 import cobb.www.libseeta.cameraPreview.CameraTexturePreview;
 import cobb.www.libseeta.cameraPreview.CameraWrapper;
 

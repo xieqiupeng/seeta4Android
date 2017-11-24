@@ -12,8 +12,8 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import cn.edu.zstu.R;
-import cobb.www.libseeta.Detection.Detection.AssetUtil;
-import cobb.www.libseeta.Detection.Detection.FaceDetector;
+import cobb.www.libseeta.Detection.AssetUtil;
+import cobb.www.libseeta.Detection.FaceDetector;
 import cobb.www.libseeta.cameraPreview.CameraTexturePreview;
 
 /**
