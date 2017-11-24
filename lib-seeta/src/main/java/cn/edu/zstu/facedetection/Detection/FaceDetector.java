@@ -143,7 +143,7 @@ public class FaceDetector {
 				// Save image
 				FaceUtil.saveByteToFile(mVideoSource, CameraWrapper.IMAGE_WIDTH, CameraWrapper.IMAGE_HEIGHT);
 				// TODO 停止
-				EventBus.getDefault().post("stop");
+				EventBus.getDefault().post(new MessageEvent("stop"));
 				//stopDetector();
 			} else {
 				drawRect(null);
