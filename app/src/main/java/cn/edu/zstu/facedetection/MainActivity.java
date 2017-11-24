@@ -47,6 +47,7 @@ public class MainActivity extends Activity implements
 		AssetUtil.copyAssetToCache(this);
 		mFacetector = FaceDetector.getInstance();
 		mFacetector.setUIThreadInterface(mFaceSurface);
+		mFacetector.startDetector();
 	}
 
 	@Override

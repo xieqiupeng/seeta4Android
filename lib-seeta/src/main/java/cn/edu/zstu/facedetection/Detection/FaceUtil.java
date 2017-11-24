@@ -31,11 +31,11 @@ public class FaceUtil {
 	 * 在指定画布上将人脸框出来
 	 *
 	 * @param canvas 给定的画布
-	 * @param face 需要绘制的人脸信息
+	 * @param face   需要绘制的人脸信息
 	 */
 	static public void drawRect(Canvas canvas, Rect face) {
 
-		if(canvas == null) {
+		if (canvas == null) {
 			return;
 		}
 
@@ -49,9 +49,10 @@ public class FaceUtil {
 
 	/**
 	 * 获取保存路径
+	 *
 	 * @return
 	 */
-	public static String getFacePath(){
+	public static String getFacePath() {
 		String path;
 		folder = new File(SAVE_PATH);
 		if (!folder.exists()) {
@@ -73,6 +74,7 @@ public class FaceUtil {
 
 	/**
 	 * 获取保存路径
+	 *
 	 * @return
 	 */
 	public static String getImagePath() {
@@ -94,14 +96,15 @@ public class FaceUtil {
 		// TODO 放在Download下，存一个。
 //		return SAVE_PATH + "Image/" + "IMAGE" + timeStr + ".jpg";
 		//
-		return SAVE_PATH + "IMAGE.jpg";
+		return SAVE_PATH + "Image/" + "IMAGE.jpg";
 	}
 
 	/**
 	 * 保存Bitmap至本地
+	 *
 	 * @param bmp
 	 */
-	public static void saveBitmapToFile(Bitmap bmp){
+	public static void saveBitmapToFile(Bitmap bmp) {
 		String file_path = getFacePath();
 		File file = new File(file_path);
 		FileOutputStream fOut;
@@ -117,9 +120,10 @@ public class FaceUtil {
 
 	/**
 	 * 保存byte[]至本地
-	 * @param src  image byte[]
-	 * @param w    width
-	 * @param h    height
+	 *
+	 * @param src image byte[]
+	 * @param w   width
+	 * @param h   height
 	 */
 	public static void saveByteToFile(byte[] src, int w, int h) {
 		String path = getImagePath();

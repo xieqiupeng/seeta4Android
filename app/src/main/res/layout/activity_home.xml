@@ -15,44 +15,42 @@ ACTION OF CONTRACT, NEGLIGENCE OR OTHER TORTIOUS ACTION, ARISING OUT OF
 OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -->
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:fab="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    android:layout_width="fill_parent"
-    android:layout_height="fill_parent">
+                xmlns:fab="http://schemas.android.com/apk/res-auto"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:orientation="vertical">
 
     <cn.edu.zstu.facedetection.cameraPreview.CameraTexturePreview
         android:id="@+id/sfv_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <SurfaceView
         android:id="@+id/sfv_face"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"/>
 
     <RelativeLayout
         android:id="@+id/det_layout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:layout_marginLeft="30dp"
-        android:visibility="visible">
+        android:visibility="gone">
 
         <Switch
             android:id="@+id/swt"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="人脸检测"
-            android:textColor="#4BB182"
-            android:textSize="12sp"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
+            android:checked="false"
+            android:paddingBottom="15dp"
             android:paddingLeft="15dp"
             android:paddingRight="15dp"
-            android:paddingBottom="15dp"
             android:paddingTop="15dp"
-            android:checked="false" />
-
+            android:text="人脸检测"
+            android:textColor="#4BB182"
+            android:textSize="12sp"/>
     </RelativeLayout>
-
 </RelativeLayout>
