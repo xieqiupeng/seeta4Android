@@ -1,4 +1,4 @@
-package cobb.www.libseeta.Detection;
+package cn.edu.zstu.facedetection.Detection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,8 +16,8 @@ import org.greenrobot.eventbus.EventBus;
 
 import java.io.ByteArrayOutputStream;
 
-import cobb.www.libseeta.cameraPreview.CameraTexturePreview;
-import cobb.www.libseeta.cameraPreview.CameraWrapper;
+import cn.edu.zstu.facedetection.cameraPreview.CameraTexturePreview;
+import cn.edu.zstu.facedetection.cameraPreview.CameraWrapper;
 
 /**
  * Created by Chenlei on 2017/04/28.

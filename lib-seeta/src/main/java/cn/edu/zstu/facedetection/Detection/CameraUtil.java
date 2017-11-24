@@ -1,4 +1,4 @@
-package cobb.www.libseeta.Detection;
+package cn.edu.zstu.facedetection.Detection;
 
 import android.content.Context;
 import android.graphics.Point;

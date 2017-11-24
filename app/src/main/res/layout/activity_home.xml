@@ -20,7 +20,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
     android:layout_width="fill_parent"
     android:layout_height="fill_parent">
 
-    <cobb.www.libseeta.cameraPreview.CameraTexturePreview
+    <cn.edu.zstu.facedetection.cameraPreview.CameraTexturePreview
         android:id="@+id/sfv_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />

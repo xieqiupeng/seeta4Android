@@ -18,7 +18,7 @@
  * Copyright (C) 2015-2017 The ZSTU SmartHome Project
  */
 
-package cobb.www.libseeta.cameraPreview;
+package cn.edu.zstu.facedetection.cameraPreview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -32,8 +32,8 @@ import android.view.SurfaceHolder;
 import java.io.IOException;
 import java.util.List;
 
-import cobb.www.libseeta.Detection.CameraUtil;
-import cobb.www.libseeta.Detection.FaceDetector;
+import cn.edu.zstu.facedetection.Detection.CameraUtil;
+import cn.edu.zstu.facedetection.Detection.FaceDetector;
 
 @SuppressLint("NewApi")
 public class CameraWrapper {

@@ -1,4 +1,4 @@
-package cobb.www.libseeta.Detection;
+package cn.edu.zstu.facedetection.Detection;
 
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;

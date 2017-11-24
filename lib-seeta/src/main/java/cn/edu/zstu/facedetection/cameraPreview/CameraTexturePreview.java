@@ -18,7 +18,7 @@
  * Copyright (C) 2015-2017 The ZSTU SmartHome Project
  */
 
-package cobb.www.libseeta.cameraPreview;
+package cn.edu.zstu.facedetection.cameraPreview;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -28,7 +28,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.view.TextureView;
 
-import cobb.www.libseeta.Detection.FaceDetector;
+import cn.edu.zstu.facedetection.Detection.FaceDetector;
 
 @SuppressLint("NewApi")
 public class CameraTexturePreview extends TextureView implements TextureView.SurfaceTextureListener {
