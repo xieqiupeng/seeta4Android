@@ -10,7 +10,6 @@
 
 package cn.edu.zstu.facedetection;
 
-import android.app.Activity;
 import android.content.ContentResolver;
 import android.content.Context;
 import android.content.Intent;
@@ -22,6 +21,7 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -42,7 +42,7 @@ import seetaface.GetPathFromUri4kitkat;
 import seetaface.JniClient;
 import seetaface.XUtils;
 
-public class CompareActivity extends Activity {
+public class CompareActivity extends AppCompatActivity {
 	//
 	ImageView imv1, imv2, imvFace1, imvFace2;
 	TextView textView1, textView2;

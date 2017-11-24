@@ -16,7 +16,7 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -->
 <resources>
   <!--file XML-->
-  <string name="app_name">SeetaFaceApp</string>
+  <string name="app_name">SeetaApp</string>
 
   <!--MainActivity.java-->
   <string name="waiting">请稍后…</string>

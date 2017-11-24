@@ -48,7 +48,8 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".facedetection.CompareActivity"/>
+        <activity android:name=".facedetection.CompareActivity"
+            android:theme="@style/Theme.AppCompat.DayNight"/>
     </application>
 
 </manifest>
