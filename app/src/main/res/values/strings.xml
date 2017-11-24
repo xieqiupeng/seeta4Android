@@ -16,12 +16,13 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
 -->
 <resources>
   <!--file XML-->
-  <string name="app_name">人脸检测</string>
+  <string name="app_name">SeetaFaceApp</string>
 
   <!--MainActivity.java-->
   <string name="waiting">请稍后…</string>
   <string name="no_camera_permission">摄像头权限未打开，请打开后再试</string>
   <string name="cant_get_image">图片信息无法正常获取！</string>
   <string name="open_camera_failed">打开相机失败</string>
+  <string name="login_firstly">可视对讲未登录,请先登录。</string>
 
 </resources>

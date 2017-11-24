@@ -22,7 +22,6 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.Bundle;
-import android.os.Environment;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.Menu;
@@ -61,11 +60,6 @@ public class CompareActivity extends Activity {
 	int mWidth2, mHeight2, mCh2; //照片2的宽度高度、通道
 	int mFaceNum1, mFaceNum2; //人脸数
 	JniClient jni;
-
-	//
-	private static String PATH_IMG1 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FaceDetection/Image/";
-	private static String PATH_IMG2 = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FaceDetection/Image/";
-
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -208,7 +202,6 @@ public class CompareActivity extends Activity {
 	}
 
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-
 		if (resultCode != RESULT_OK) { // 此处的 RESULT_OK 是系统自定义得一个常量
 			Log.e("TAG->onresult", "ActivityResult resultCode error");
 			return;
@@ -232,8 +225,9 @@ public class CompareActivity extends Activity {
 
 			//ProgressDialogUtil.startProgress(GrayProcess.this, "正在识别图片");
 			long te = System.currentTimeMillis();
+			//
 			Bitmap bitmap = XUtils.getScaledBitmap(imgPath, 600);
-			//Log.i("loadimg", "getScaledBitmap"); 
+			//Log.i("loadimg", "getScaledBitmap");
 			if (null == bitmap) {
 				Log.i("loadimg", "图片无法加载");
 				return;
