@@ -72,7 +72,8 @@ public class FaceDetector {
 		}
 		// TODO 注释前置摄像头
 //        saveFace(x, y, x + width, y + height);
-
+//		EventBus.getDefault().post(new MessageEvent("stop"));
+		//
 		if (DEBUG)
 			Log.e(TAG, "[callback] " + "  x:" + x + "  y:" + y + " w:" + width + " h:" + height);
 		if (DEBUG)
@@ -140,11 +141,9 @@ public class FaceDetector {
 
 			if (predictResult) {
 				if (DEBUG) Log.i(TAG, "[检测到人脸]");
-				// Save image
+				// TODO 注释后置摄像头
 				FaceUtil.saveByteToFile(mVideoSource, CameraWrapper.IMAGE_WIDTH, CameraWrapper.IMAGE_HEIGHT);
-				// TODO 停止
 				EventBus.getDefault().post(new MessageEvent("stop"));
-				//stopDetector();
 			} else {
 				drawRect(null);
 			}

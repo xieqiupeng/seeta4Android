@@ -50,7 +50,7 @@ public class CameraWrapper {
 	private boolean mIsPreviewing = false;
 	private float mPreviewRate = -1.0f;
 	private CameraPreviewCallback mCameraPreviewCallback;
-	private int openCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+	private int openCameraId = Camera.CameraInfo.CAMERA_FACING_FRONT;
 
 	private Context context = null;
 

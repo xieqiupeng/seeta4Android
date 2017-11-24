@@ -105,7 +105,9 @@ public class FaceUtil {
 	 * @param bmp
 	 */
 	public static void saveBitmapToFile(Bitmap bmp) {
-		String file_path = getFacePath();
+		// TODO
+//		String file_path = getFacePath();
+		String file_path = getImagePath();
 		File file = new File(file_path);
 		FileOutputStream fOut;
 		try {
