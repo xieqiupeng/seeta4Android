@@ -12,9 +12,9 @@ import android.widget.RelativeLayout;
 import android.widget.Switch;
 
 import cn.edu.zstu.R;
-import cn.edu.zstu.facedetection.Detection.AssetUtil;
-import cn.edu.zstu.facedetection.Detection.FaceDetector;
-import cn.edu.zstu.facedetection.cameraPreview.CameraTexturePreview;
+import cobb.www.libseeta.Detection.Detection.AssetUtil;
+import cobb.www.libseeta.Detection.Detection.FaceDetector;
+import cobb.www.libseeta.cameraPreview.CameraTexturePreview;
 
 /**
  * Created by Chenlei on 2017/04/28.
