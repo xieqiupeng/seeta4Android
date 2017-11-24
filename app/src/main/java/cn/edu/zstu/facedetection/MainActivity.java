@@ -9,7 +9,7 @@ import android.view.SurfaceView;
 import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.RelativeLayout;
-import android.widget.Switch;
+import android.widget.ToggleButton;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -30,7 +30,7 @@ public class MainActivity extends Activity implements
 
 	private SurfaceView mFaceSurface;
 	private FaceDetector mFacetector;
-	private Switch mSwitch;
+	private ToggleButton mSwitch;
 	private RelativeLayout mSwitchLayout;
 	private boolean mIsDisplay;
 
@@ -47,7 +47,8 @@ public class MainActivity extends Activity implements
 		AssetUtil.copyAssetToCache(this);
 		mFacetector = FaceDetector.getInstance();
 		mFacetector.setUIThreadInterface(mFaceSurface);
-		mFacetector.startDetector();
+		//
+		EventBus.getDefault().post("start");
 	}
 
 	@Override
@@ -61,7 +62,6 @@ public class MainActivity extends Activity implements
 	protected void onResume() {
 		super.onResume();
 		if (DEBUG) Log.d(TAG, "[onResume()]");
-
 		CameraTexturePreview.openCamera();
 	}
 
@@ -73,7 +73,7 @@ public class MainActivity extends Activity implements
 
 	public void initRSwitch() {
 		mSwitchLayout = (RelativeLayout) findViewById(R.id.det_layout);
-		mSwitch = (Switch) findViewById(R.id.swt);
+		mSwitch = (ToggleButton) findViewById(R.id.swt);
 		mSwitch.setOnCheckedChangeListener(this);
 	}
 
@@ -111,8 +111,13 @@ public class MainActivity extends Activity implements
 
 	@Subscribe
 	public void onEventMainThread(MessageEvent event) {
-		Log.d("123123", event.message);
-//		Toast.makeText(this, event.message, Toast.LENGTH_LONG).show();
+		if (event.message.equals("start")) {
+			mFacetector.startDetector();
+		} else if (event.message.equals("stop")) {
+//			mSwitch.setChecked(false);
+			mFacetector.stopDetector();
+			Log.d("123123", event.message);
+		}
 	}
 
 	@Override

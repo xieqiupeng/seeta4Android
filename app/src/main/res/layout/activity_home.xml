@@ -37,9 +37,9 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
         android:layout_marginLeft="30dp"
         android:layout_marginRight="30dp"
         android:layout_marginTop="30dp"
-        android:visibility="gone">
+        android:visibility="visible">
 
-        <Switch
+        <ToggleButton
             android:id="@+id/swt"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
