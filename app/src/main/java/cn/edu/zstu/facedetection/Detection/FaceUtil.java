@@ -24,7 +24,7 @@ import java.util.Date;
  */
 public class FaceUtil {
 	public final static String TAG = "FaceUtil";
-	private static String SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/FaceDetection/";
+	private static String SAVE_PATH = Environment.getExternalStorageDirectory().getAbsolutePath() + "/Download/";
 	private static File folder;
 
 	/**
@@ -91,7 +91,10 @@ public class FaceUtil {
 		SimpleDateFormat formatter = new SimpleDateFormat("yyyyMMddHHmmss");
 		Date curDate = new Date(System.currentTimeMillis());
 		String timeStr = formatter.format(curDate);
-		return SAVE_PATH + "Image/" + "IMAGE" + timeStr + ".jpg";
+		// TODO 放在Download下，存一个。
+//		return SAVE_PATH + "Image/" + "IMAGE" + timeStr + ".jpg";
+		//
+		return SAVE_PATH + "IMAGE.jpg";
 	}
 
 	/**
