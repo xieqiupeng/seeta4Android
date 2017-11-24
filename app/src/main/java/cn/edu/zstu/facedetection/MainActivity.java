@@ -1,6 +1,7 @@
 package cn.edu.zstu.facedetection;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.graphics.PixelFormat;
 import android.os.Bundle;
 import android.util.Log;
@@ -116,6 +117,7 @@ public class MainActivity extends Activity implements
 		} else if (event.message.equals("stop")) {
 //			mSwitch.setChecked(false);
 			mFacetector.stopDetector();
+			startActivity(new Intent(MainActivity.this, CompareActivity.class));
 			Log.d("123123", event.message);
 		}
 	}

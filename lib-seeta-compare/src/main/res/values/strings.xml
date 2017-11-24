@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">SeetaFace</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="resourcePath">/sdcard/Download/</string>
+    <string name="face_detect">人脸检测</string>
+    <string name="path_bin">/sdcard/Download/</string>
+</resources>

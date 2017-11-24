@@ -1,0 +1,4 @@
+D:/0_YX/seeta4Android/lib-seeta-compare/.externalNativeBuild/cmake/release/arm64-v8a/CMakeFiles/native-lib.dir
+D:/0_YX/seeta4Android/lib-seeta-compare/.externalNativeBuild/cmake/release/arm64-v8a/CMakeFiles/edit_cache.dir
+D:/0_YX/seeta4Android/lib-seeta-compare/.externalNativeBuild/cmake/release/arm64-v8a/CMakeFiles/SeetafaceSo.dir
+D:/0_YX/seeta4Android/lib-seeta-compare/.externalNativeBuild/cmake/release/arm64-v8a/CMakeFiles/rebuild_cache.dir

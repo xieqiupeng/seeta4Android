@@ -1,1 +1,1 @@
-include ':app', ':lib-seeta'
+include ':app', ':lib-seeta', ':lib-seeta-compare'
