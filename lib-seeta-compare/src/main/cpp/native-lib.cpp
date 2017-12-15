@@ -3,7 +3,7 @@
 
 extern "C"
 jstring
-Java_com_qiupeng_HomeActivity_stringFromJNI(
+Java_cobb_www_lib_seeta_compare_HomeActivity_stringFromJNI(
         JNIEnv *env,
         jobject /* this */) {
     std::string hello = "Hello from C++";

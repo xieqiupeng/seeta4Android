@@ -8,9 +8,12 @@ android {
         targetSdkVersion 26
         versionCode 2
         versionName "1.0.1"
-
+        flavorDimensions "8"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-
+        ndk {
+            // 设置支持的SO库架构
+            abiFilters 'armeabi-v7a', 'arm64-v8a'//,'x86_64', 'x86'
+        }
     }
 
     buildTypes {
@@ -20,6 +23,25 @@ android {
         }
     }
 
+    sourceSets {
+        main {
+            jni.srcDirs = []
+            jniLibs.srcDirs = ['libs']
+        }
+    }
+
+    productFlavors {
+        armv8 {
+            dimension "8"
+            ndk {
+                abiFilter "armeabi-v7a"
+            }
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
 }
 
 dependencies {

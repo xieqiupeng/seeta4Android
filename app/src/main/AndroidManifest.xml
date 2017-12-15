@@ -36,20 +36,19 @@ OR IN CONNECTION WITH THE USE OR PERFORMANCE OF THIS SOFTWARE.
         android:name=".facedetection.util.MyApplication"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:orientation="horizontal">
+        android:theme="@style/Theme.AppCompat">
         <activity
-            android:name=".facedetection.MainActivity"
-
-            android:screenOrientation="landscape"
-            android:theme="@android:style/Theme.Holo.NoActionBar">
+            android:name="cobb.www.lib_seeta_compare.MainActivity">
+            <!--android:screenOrientation="landscape"-->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
 
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity android:name=".facedetection.CompareActivity"
-            android:theme="@style/Theme.AppCompat.DayNight"/>
+        <activity android:name=".facedetection.CompareActivity"/>
+        <!--<activity android:name="cobb.www.lib_seeta_compare.MainActivity"/>-->
+        <!--<activity android:name="cobb.www.lib_seeta_compare.HomeActivity"/>-->
     </application>
 
 </manifest>

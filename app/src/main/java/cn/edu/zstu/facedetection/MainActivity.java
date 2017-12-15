@@ -38,7 +38,7 @@ public class MainActivity extends Activity implements
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.activity_home);
+		setContentView(R.layout.activity_splash);
 		if (DEBUG) Log.d(TAG, "[onCreate()]");
 		//
 		init();
